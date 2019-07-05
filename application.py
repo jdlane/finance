@@ -118,7 +118,7 @@ def buy():
         #check if shares of that stock already owned
         stock = db.execute("SELECT shares FROM stocks WHERE user_id=:user_id AND symbol=:symbol",user_id=session["user_id"],symbol=symbol)
         if stock:
-            db.execute("UPDATE stocks SET shares=:shares WHERE user_id=:user_id AND symbol=:symbol",shares=stock[0]["shares"]+1,user_id=session["user_id"],symbol=symbol)
+            db.execute("UPDATE stocks SET shares=:shares WHERE user_id=:user_id AND symbol=:symbol",shares=stock[0]["shares"]+shares,user_id=session["user_id"],symbol=symbol)
         elif not db.execute("INSERT INTO stocks (user_id, symbol, shares) VALUES (:user_id, :symbol, :shares)", user_id=session["user_id"], symbol=symbol, shares=shares):
             #if can't add stock to table, refund user
             db.execute("UPDATE users SET cash=:cash WHERE id=:user_id",cash=balance,user_id=session["user_id"])
