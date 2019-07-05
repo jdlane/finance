@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+
+<table class="table table-striped">
+  <th>
+    <td>Symbol</td>
+    <td>Value Per Share</td>
+    <td>Shares</td>
+    <td>Value of Shares</td>
+    <td>Buy</td>
+    <td>Sell</td>
+  </th>
+  {% for row in rows %}
+    <tr>
+      <th>{{row.name}}</th>
+      <td>{{row.symbol}}</td>
+      <td>{{row.price}}</td>
+      <td>{{row.shares}}</td>
+      <td>{{row.total_price}}</td>
+      <td>
+        <form action="/buy" method="get">
+          <button name="symbol" value="{{row.symbol}}" class="btn btn-primary">Buy</button>
+        </form>
+      </td>
+      <td>
+        <form action="/sell" method="get">
+          <button name="symbol" value="{{row.symbol}}" class="btn btn-primary">Sell</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  <tr>
+    <th>Total Value:</th>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>{{total_value}}</td>
+  </tr>
+  <tr>
+    <th>Balance:</th>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>{{balance}}</td>
+  </tr>
+  <tr>
+  <tr>
+    <th>Total:</th>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>{{total_money}}</td>
+  </tr>
+</table>
+
+{% endblock %}

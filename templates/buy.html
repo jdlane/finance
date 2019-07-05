@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy Stocks
+{% endblock %}
+
+{% block main %}
+
+<h3><h3>
+<form method="post" action="/buy">
+  <div class="form-group">
+    {% if symbol %}
+    <input type="text" placeholder="Symbol" value="{{symbol}}" name="symbol" class="form-control listened" id="symbol">
+    {% else %}
+    <input type="text" placeholder="Symbol" name="symbol" id="symbol" class="form-control listened">
+    {% endif %}
+  </div>
+  <div class="form-group">
+  <input type="text" placeholder="Shares" name="shares" id="shares" class="form-control">
+  </div>
+  <div class="form-group">
+  <p id="price"></p>
+  </div>
+  <div class="form-group">
+  <input type="submit" value="Buy" class="form-control btn btn-primary">
+  </div>
+</form>
+
+<p id="price"></p>
+
+<script>
+  //show price of shares as user changes amount or changes symbol
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector("#shares").addEventListener("change", getPrice);
+    document.querySelector("#symbol").addEventListener("change", getPrice);
+  });
+  
+  function getPrice(){
+      shares_field = document.querySelector("#shares");
+      symbol = document.querySelector("#symbol");
+      if(shares_field&&symbol){
+      $.get("/price?shares="+shares_field.value+"&symbol="+symbol.value, (price) => {
+        if(price!="no"){
+          document.querySelector("#price").innerHTML = price;
+        }else{
+          document.querySelector("#price").innerHTML = "";
+        }
+      });
+      }
+  }
+</script>
+{% endblock %}

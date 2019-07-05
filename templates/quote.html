@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Get stock price
+{% endblock %}
+
+{% block main %}
+<h3>Find a stock</h3>
+<form method="POST" action="/quote">
+  <div class="form-group">
+    <input type="text" name="symbol" placeholder="Symbol" class="form-control">
+  </div>
+  <div class="form-group">
+    <input type="submit" class="form-control btn btn-primary">
+  </div>
+</form>
+
+<!-- If jinja condition given, display results on same page -->
+{% if name %}
+<p>{{name}}, ({{symbol}}): ${{price}} a share</p>
+<form method="get" action="/buy">
+<button class="btn btn-primary" name="symbol" value={{symbol}}>Buy</button>
+</form>
+{% endif %}
+
+{% endblock %}
